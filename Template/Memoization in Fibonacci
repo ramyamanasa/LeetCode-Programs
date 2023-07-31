@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+#define NIL -1
+#define MAX 100
+
+int memo[MAX];
+
+// function to initialize NIL values in lookup table
+
+void initialize()
+{
+    int i;
+    for(i=0; i<MAX; i++){
+        memo[i] = NIL;
+    }
+}
+    
+    //function for fib
+    
+    int fib (int n)
+    {
+        if (memo[n] == NIL){
+            
+            if (n<=1){
+                memo[n] = n;
+            }
+            
+            else {
+                memo[n] = fib(n-1) + fib(n-2);
+            }
+            
+        }
+            
+            return memo[n];
+    }
+    
+    int main()
+{
+    int n = 40;
+    initialize();
+    cout << "Fibonacci number is " << fib(n);
+    return 0;
+}
