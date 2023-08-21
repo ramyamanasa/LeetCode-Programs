@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        int n = s.length();
+        
+        //for optimization checking from n/2
+        for(int l=n/2; l >= 1; l--) {
+            
+            if(n%l == 0) {  // takes 2*root(n) time
+                int times = n/l;    // append only n/l times
+                
+                string pattern  = s.substr(0, l); //checking from 1st character 
+                
+                string newStr = "";
+                
+                while(times--) { //appending the substring
+                    newStr += pattern;
+                }
+                
+                if(newStr == s){
+                    return true;
+                }
+            }
+            
+        }
+        
+        return false;
+    }
+};
