@@ -1,0 +1,36 @@
+class MyStack {
+public:
+ 
+    queue<int> q1;
+    queue<int> q2; // to store the front elements when a new element is pushed
+    
+    MyStack() {
+        
+    }
+    
+    void push(int x) {
+        
+        q2.push(x);
+        
+        while(!q1.empty()) {
+            q2.push(q1.front());    //if elements already exists in q1 then push the front element to q2
+            q1.pop(); //remove the element from q1
+        }
+        
+        swap(q1, q2); //get all the elements of q1 to q2
+    }
+ 
+    int pop() {
+        int result = top();
+        q1.pop();
+        return result;
+    }
+ 
+    int top() {
+        return q1.front();
+    }
+
+    bool empty() {
+        return q1.empty();
+    }
+};
