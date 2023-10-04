@@ -1,0 +1,121 @@
+class MyHashMap {
+public:
+    
+    //brute force approach -- wouldnt work if key is string or not an integer
+    
+    //simply putting values in index of key
+    //a vector to store the values
+    vector<int> vec;
+    int size; 
+    
+    MyHashMap() {
+        
+        size= 1e6+1; //10^6+1
+        vec.resize(size);
+        
+        //initialize it by keeping all -1
+        fill(begin(vec), end(vec), -1);
+        
+    }
+    
+    void put(int key, int value) {
+        //in the index of the given key we will simply keep the value
+        vec[key]= value;
+        
+        
+    }
+    
+    int get(int key) {
+        //if present return the value in that given key index 
+        return vec[key];
+    }
+    
+    void remove(int key) {
+        //changes the value of that key to -1 
+        vec[key] = -1;
+        
+    }
+};
+
+//approach -2
+
+class MyHashMap {
+public:
+    
+    //approach- 2
+    //taking a vector of linked list 
+    vector<list<pair<int, int>>> buckets;
+    int size=10000;//smaller size container
+    
+    
+    MyHashMap() {
+        buckets.resize(size);
+        
+    }
+    
+    void put(int key, int value) {
+        //hash function
+        int bucket_no = key % size;
+        
+        //checking which chain this is pointing to
+        auto &chain = buckets[bucket_no];
+        
+        for(auto &it : chain){
+            //it.first = key;
+            //it.second = value
+            
+            if(it.first == key){
+                //update value
+                it.second = value;
+                return;
+            }
+        }
+        
+        //if key in present-- emplaceback
+        
+        chain.emplace_back(key, value);
+        
+        
+    }
+    
+    int get(int key) {
+        
+        int bucket_no = key % size;
+        
+        //checking which chain this is pointing to
+        auto &chain = buckets[bucket_no];
+        
+        if(chain.empty())
+        {
+            return -1;
+        }
+        //if present
+        for(auto &it : chain) {
+            if(it.first == key){
+                return it.second;
+            }
+        }
+        return -1;
+        
+    }
+    
+    void remove(int key) {
+        
+          int bucket_no = key % size;
+        
+        //checking which chain this is pointing to
+        auto &chain = buckets[bucket_no];
+        
+        //if present
+        for(auto it = chain.begin(); it != chain.end(); it++) {
+            //it = {a,b}
+            if(it->first == key){
+                chain.erase(it);
+                return;
+            }
+        }
+        
+        
+    }
+};
+
