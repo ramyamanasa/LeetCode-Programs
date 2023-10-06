@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int result = INT_MIN;
+    //Memoization
+    int t[59]; //as constraint is 2<=n<=58
+    
+    int solve(int n){
+        
+        int prod;
+        
+        if (n==1) {
+            return 1;
+        }
+        
+         if (t[n] != -1) {
+                    return t[n];
+                }
+        
+        else {
+            for(int i=1; i<n; i++){
+                
+              
+                prod = i *max(n-i,  solve(n-i));
+                result = max(result, prod);
+                
+            }
+        }
+        
+        return t[n] = result;
+    }
+    int integerBreak(int n) {
+        
+        memset(t, -1, sizeof(t));
+        
+        return solve(n);
+        
+    }
+};
