@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        
+        vector<int>prev;
+            
+        //for each ith row i+1 elements will be there
+        for(int i=0; i<rowIndex+1; i++){ 
+            //1D vector
+            vector<int> curr(i+1,1); //i+1 elements with all values 1
+            
+            for(int j=1; j<i; j++){
+                
+                curr[j] = prev[j] + prev[j-1]; //in place of jth in curr calculate its previous row up elements's sum
+            }
+         //saving in prev  
+         prev = curr; 
+
+        }
+        
+    return prev;    
+    }
+};
