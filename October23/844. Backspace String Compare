@@ -1,0 +1,126 @@
+Approach - 1 mine just erasing when see # -- didnt work
+
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+        
+        for (int i=0; i<s.length(); i++){
+            
+            if(s[i] == '#'){
+                s.erase(s.begin()+(i-1),s.begin()+(i+1));
+
+                
+            }
+        }
+        
+         for (int j=0; j<t.length(); j++){
+            
+            if(t[j] == '#'){
+                t.erase(t.begin()+(j-1),t.begin()+(j+1));
+
+            }
+        }
+        
+        cout<<s<<endl;
+        cout<<t;
+        
+        return s==t;
+        
+        
+        
+    }
+};
+
+
+
+
+
+
+Approach - 2 using stack and popping when #
+
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+        string newS = processString(s);
+        string newT = processString(t);
+
+        cout << newS << endl;
+        cout << newT;
+
+        return newS == newT;
+    }
+
+    string processString(string input) {
+        string result;
+        
+        for (char c : input) {
+            if (c == '#') {
+                if (!result.empty()) {
+                    result.pop_back();  // Remove the last character if it exists
+                }
+            } else {
+                result += c;  // Add non-# characters to the result
+            }
+        }
+
+        return result;
+    }
+};
+
+
+
+
+Approach - 3 skipping from behind if -1 takes $ and compares
+
+
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+        int m = s.length();
+        int n = t.length();
+        
+        int i = m-1, j = n-1;
+        int skip_s = 0;
+        int skip_t = 0;
+        
+        while(i >= 0 || j >= 0) {
+            
+            while(i >= 0) {
+                if(s[i] == '#') {
+                    skip_s++;
+                    i--;
+                } else if(skip_s > 0) {
+                    skip_s--;
+                    i--;
+                } else {
+                    break;
+                }
+            }
+            
+            while(j >= 0) {
+                if(t[j] == '#') {
+                    skip_t++;
+                    j--;
+                } else if(skip_t > 0) {
+                    skip_t--;
+                    j--;
+                } else {
+                    break;
+                }
+            }
+            
+            char first  = i < 0 ? '$' : s[i];
+            char second = j < 0 ? '$' : t[j];
+            
+            if(first != second)
+                return false;
+            
+            i--;
+            j--;
+        }
+        
+        return true;
+        
+    }
+};
+
